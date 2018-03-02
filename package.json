@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon --inspect ."
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "pg": "6",
     "sequelize": "^4.35.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
   }
 }
