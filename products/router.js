@@ -35,6 +35,7 @@ router.get('/products/:id', (req, res) => {
 
 router.post('/products', requireUser, (req, res) => {
   const product = req.body
+  product.userId = req.user.id
 
   Product.create(product)
     .then(entity => {
@@ -53,7 +54,14 @@ const updateOrPatch = (req, res) => {
 
   Product.findById(req.params.id)
     .then(entity => {
-      return entity.update(updates)
+      if (entity.userId !== req.user.id) {
+        res.status(403).send({
+          message: 'You\'re not allowed to edit this product!'
+        })
+      }
+      else {
+        return entity.update(updates)
+      }
     })
     .then(final => {
       res.json(final)
@@ -72,7 +80,14 @@ router.patch('/products/:id', requireUser, updateOrPatch)
 router.delete('/products/:id', (req, res) => {
   Product.findById(req.params.id)
     .then(entity => {
-      return entity.destroy()
+      if (entity.userId !== req.user.id) {
+        res.status(403).send({
+          message: 'You\'re not allowed to delete this product!'
+        })
+      }
+      else {
+        return entity.destroy()
+      }
     })
     .then(_ => {
       res.send({

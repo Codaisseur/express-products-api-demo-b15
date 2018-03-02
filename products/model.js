@@ -14,7 +14,11 @@ const Product = sequelize.define('product', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  image: Sequelize.STRING
+  image: Sequelize.STRING,
+  userId: {
+    type: Sequelize.INTEGER,
+    field: 'user_id'
+  }
 }, {
   tableName: 'products',
   timestamps: false
