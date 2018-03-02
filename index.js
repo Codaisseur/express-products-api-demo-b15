@@ -3,6 +3,8 @@ const Sequelize = require('sequelize')
 const bodyParser = require('body-parser')
 const productsRouter = require('./products/router')
 const usersRouter = require('./users/router')
+const authRouter = require('./authentication/router')
+const tokenMiddleware = require('./authentication/middleware').tokenMiddleware
 
 const app = express()
 
@@ -18,6 +20,8 @@ app.use((req, res, next) => {
 })
 
 app.use(bodyParser.json())
+app.use(tokenMiddleware)
 
 app.use(productsRouter)
 app.use(usersRouter)
+app.use(authRouter)

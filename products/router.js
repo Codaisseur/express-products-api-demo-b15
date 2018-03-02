@@ -1,5 +1,6 @@
 const Router = require('express').Router
 const Product = require('./model')
+const requireUser = require('../authentication/middleware').requireUser
 
 const router = new Router()
 
@@ -32,7 +33,7 @@ router.get('/products/:id', (req, res) => {
     })
 })
 
-router.post('/products', (req, res) => {
+router.post('/products', requireUser, (req, res) => {
   const product = req.body
 
   Product.create(product)
@@ -65,8 +66,8 @@ const updateOrPatch = (req, res) => {
     })
 }
 
-router.put('/products/:id', updateOrPatch)
-router.patch('/products/:id', updateOrPatch)
+router.put('/products/:id', requireUser, updateOrPatch)
+router.patch('/products/:id', requireUser, updateOrPatch)
 
 router.delete('/products/:id', (req, res) => {
   Product.findById(req.params.id)

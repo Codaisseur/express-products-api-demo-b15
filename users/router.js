@@ -1,6 +1,7 @@
 const Router = require('express').Router
 const bcrypt = require('bcrypt')
 const User = require('./model')
+const requireUser = require('../authentication/middleware').requireUser
 
 const router = new Router()
 
@@ -24,6 +25,12 @@ router.post('/users', (req, res) => {
     		message: 'Something went wrong'
     	})
     })
+})
+
+router.get('/secret', requireUser, (req, res) => {
+	res.send({
+		message: `Welcome, you should be the user with email ${req.user.email}`
+	})
 })
 
 module.exports = router
