@@ -2,6 +2,7 @@ const express = require('express')
 const Sequelize = require('sequelize')
 const bodyParser = require('body-parser')
 const productsRouter = require('./products/router')
+const usersRouter = require('./users/router')
 
 const app = express()
 
@@ -19,3 +20,4 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 
 app.use(productsRouter)
+app.use(usersRouter)
