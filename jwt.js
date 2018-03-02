@@ -12,4 +12,4 @@ const verify = (token, callback) => {
   jwt.verify(token, secret, callback)
 }
 
-module.exports = { sign, verify }
+module.exports = { sign, verify, secret }
